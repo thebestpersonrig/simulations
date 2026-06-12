@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SimLab — Interactive Physics Simulations</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%90%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<div class="bg-orbs" aria-hidden="true">
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+  <div class="orb orb-c"></div>
+</div>
+
+<nav class="nav">
+  <a class="logo" href="index.html">Sim<span>Lab</span></a>
+  <div class="nav-right">
+    <span class="nav-tag">v0.1 · open lab</span>
+  </div>
+</nav>
+
+<header class="hero container">
+  <div class="hero-kicker">// interactive physics, in your browser</div>
+  <h1>Physics you can<br><em>actually touch.</em></h1>
+  <p class="hero-sub">Hands-on instrument simulations with randomly generated practice problems,
+  guided solutions and instant feedback. No installs, no sign-ups — just open and explore.</p>
+  <a class="btn btn-primary hero-cta" href="sims/vernier-caliper/index.html">
+    Launch Vernier Callipers
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </a>
+</header>
+
+<main class="container">
+  <div class="section-head">
+    <h2>Simulations</h2>
+    <span class="section-line"></span>
+  </div>
+
+  <div class="sim-grid">
+
+    <a class="sim-card live" href="sims/vernier-caliper/index.html">
+      <div class="card-art art-teal">
+        <svg viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="8" y="18" width="104" height="14" rx="3"/>
+          <path d="M16 32v16l5 3 3-19"/>
+          <path d="M52 32v16l-5 3-3-19"/>
+          <path d="M16 18v-8l4-2 2 10"/>
+          <path d="M46 18v-8l-4-2-2 10"/>
+          <rect x="44" y="32" width="26" height="10" rx="2"/>
+          <path d="M20 26v-4M26 26v-4M32 26v-4M38 26v-4M44 26v-4M50 26v-4M56 26v-4M62 26v-4M68 26v-4M74 26v-4M80 26v-4M86 26v-4M92 26v-4M98 26v-4"/>
+          <path d="M47 38v3M52 38v3M57 38v3M62 38v3M67 38v3"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-top">
+          <h3>Vernier Callipers</h3>
+          <span class="badge badge-live">LIVE</span>
+        </div>
+        <p>Drag the jaws, read the coinciding division, master zero error — then test yourself on endless random problems.</p>
+        <div class="card-tags">
+          <span>Measurement</span><span>Zero error</span><span>Practice mode</span>
+        </div>
+      </div>
+      <div class="card-go">Open simulation →</div>
+    </a>
+
+    <a class="sim-card live" href="sims/screw-gauge/index.html">
+      <div class="card-art art-violet">
+        <svg viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M30 14h44a12 12 0 0 1 0 36h-6"/>
+          <path d="M30 14v36h22"/>
+          <path d="M36 24h10M36 30h10M36 36h10"/>
+          <circle cx="86" cy="32" r="7"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-top">
+          <h3>Screw Gauge</h3>
+          <span class="badge badge-live">LIVE</span>
+        </div>
+        <p>Micrometer precision — turn the thimble, read the circular scale and master zero error down to 0.01 mm.</p>
+        <div class="card-tags"><span>Measurement</span><span>Zero error</span><span>Practice mode</span></div>
+      </div>
+      <div class="card-go">Open simulation →</div>
+    </a>
+
+    <div class="sim-card soon">
+      <div class="card-art art-amber">
+        <svg viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M60 6v6"/>
+          <path d="M60 12 38 44M60 12l22 32" stroke-dasharray="3 4"/>
+          <path d="M60 12 60 46" />
+          <circle cx="38" cy="48" r="5"/>
+          <circle cx="82" cy="48" r="5"/>
+          <circle cx="60" cy="51" r="5"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-top">
+          <h3>Simple Pendulum</h3>
+          <span class="badge badge-soon">SOON</span>
+        </div>
+        <p>Time period vs length and gravity — run virtual experiments and plot T² against L.</p>
+        <div class="card-tags"><span>Mechanics</span><span>Oscillations</span></div>
+      </div>
+      <div class="card-go">In the workshop…</div>
+    </div>
+
+    <div class="sim-card soon">
+      <div class="card-art art-rose">
+        <svg viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 54h96"/>
+          <path d="M16 54Q60 -18 104 54" stroke-dasharray="3 4"/>
+          <circle cx="16" cy="52" r="4"/>
+          <path d="M16 52l14-22" />
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-top">
+          <h3>Projectile Motion</h3>
+          <span class="badge badge-soon">SOON</span>
+        </div>
+        <p>Launch, trace and tweak — angle, speed and gravity with live range and height readouts.</p>
+        <div class="card-tags"><span>Mechanics</span><span>Kinematics</span></div>
+      </div>
+      <div class="card-go">In the workshop…</div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="footer container">
+  <span>Built with care · SimLab 2026</span>
+  <span class="foot-dot">·</span>
+  <span>More simulations on the way</span>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+/* ============ Vernier Calliper — instrument-specific styles ============
+   (page layout lives in ../../assets/sim.css) */
+
+.mticks line { stroke: #26303f; stroke-width: 1.4; }
+.mticks line.big { stroke-width: 1.8; }
+.mlabels text {
+  font-family: var(--font-mono); font-size: 15px; font-weight: 700;
+  fill: #1f2937; text-anchor: middle;
+}
+.mlabels text.unit { font-size: 11px; fill: #4b5a72; font-weight: 500; }
+.vticks line { stroke: #1d2735; stroke-width: 1.6; }
+.vticks line.vzero { stroke: #0e7490; stroke-width: 2.4; }
+.vlabels text {
+  font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+  fill: #1f2937; text-anchor: middle;
+}
