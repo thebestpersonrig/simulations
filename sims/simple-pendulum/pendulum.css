@@ -1,0 +1,120 @@
+/* ============ Simple Pendulum — instrument-specific styles ============
+   (page layout lives in ../../assets/sim.css) */
+
+/* Stopwatch box (replaces magnifier for this sim) */
+.sw-box {
+  flex: 0 0 auto;
+  min-width: 190px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--r-md);
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+.sw-label {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--c-muted);
+  display: flex; align-items: center; gap: 0.35rem;
+}
+.sw-display {
+  font-family: var(--font-mono);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--c-text);
+  letter-spacing: 0.04em;
+}
+.sw-btns { display: flex; gap: 0.5rem; }
+
+/* Gravity preset buttons */
+.grav-row { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+.grav-btn {
+  padding: 0.22rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--c-muted);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.grav-btn:hover { background: rgba(255,255,255,0.1); color: var(--c-text); }
+.grav-btn.active {
+  background: rgba(99,179,237,0.15);
+  border-color: rgba(99,179,237,0.4);
+  color: #63b3ed;
+}
+
+/* Play / reset row */
+.play-row { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+
+/* Panel separator & subtitle */
+.panel-sep {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin: 0.75rem 0;
+}
+.panel-subtitle {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--c-muted);
+  margin: 0;
+}
+
+/* Data section */
+.data-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+.data-actions { display: flex; gap: 0.3rem; }
+.data-scroll { max-height: 160px; overflow-y: auto; }
+.data-empty {
+  color: var(--c-muted); font-style: italic;
+  font-family: var(--font-body); font-size: 0.72rem;
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+}
+.data-table th {
+  font-size: 0.58rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--c-muted);
+  padding: 0.3rem 0.35rem; text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.data-table td {
+  font-family: var(--font-mono); font-size: 0.7rem;
+  padding: 0.22rem 0.35rem; text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--c-text);
+}
+
+/* Chart */
+.chart-wrap { margin-top: 0.75rem; }
+.chart-wrap svg { width: 100%; }
+.chart-label {
+  text-align: center; font-size: 0.58rem;
+  color: var(--c-muted); margin-top: 0.3rem;
+  font-family: var(--font-mono);
+}
+
+/* SVG scene */
+.eq-line      { stroke: rgba(255,255,255,0.08); stroke-width: 1; stroke-dasharray: 6 4; }
+.trail-arc    { fill: none; stroke: rgba(212,160,48,0.18); stroke-width: 1.5; stroke-dasharray: 4 4; }
+.angle-arc    { fill: none; stroke: rgba(99,179,237,0.5); stroke-width: 1.5; }
+.angle-text   { fill: rgba(99,179,237,0.8); font-size: 12px; font-family: var(--font-mono); text-anchor: middle; }
+.len-line     { stroke: rgba(255,255,255,0.25); stroke-width: 1; }
+.len-tick     { stroke: rgba(255,255,255,0.35); stroke-width: 1; }
+.len-text     { fill: rgba(255,255,255,0.45); font-size: 11px; font-family: var(--font-mono); text-anchor: start; }
+.brand-text   { fill: rgba(255,255,255,0.06); font-size: 11px; font-family: var(--font-mono); text-anchor: middle; }

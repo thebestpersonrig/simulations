@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Pendulum — SimLab</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%90%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/sim.css">
+<link rel="stylesheet" href="pendulum.css">
+</head>
+<body data-mode="explore">
+
+<div class="bg-orbs" aria-hidden="true">
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+</div>
+
+<nav class="nav">
+  <a class="logo" href="../../index.html">Sim<span>Lab</span></a>
+  <div class="nav-right">
+    <a class="nav-back" href="../../index.html">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      All sims
+    </a>
+  </div>
+</nav>
+
+<main class="container sim-page">
+
+  <header class="sim-head">
+    <div class="sim-title-wrap">
+      <div class="sim-kicker">// mechanics · T = 2π√(L/g)</div>
+      <h1>Simple <em>Pendulum</em></h1>
+    </div>
+    <div class="sim-head-right">
+      <div class="mode-tabs" role="tablist">
+        <button id="tabExplore" class="mode-tab active" role="tab">Explore</button>
+        <button id="tabPractice" class="mode-tab" role="tab">Practice</button>
+      </div>
+      <button id="btnHelp" class="icon-btn" title="About the simple pendulum" aria-label="Help">?</button>
+    </div>
+  </header>
+
+  <div class="sim-layout">
+
+    <!-- ====== Stage ====== -->
+    <section class="card stage">
+      <div class="stage-top">
+        <span id="tipChip" class="tip-chip">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M8 9l4-4 4 4M8 15l4 4 4-4" transform="rotate(90 12 12)"/></svg>
+          <span id="tipText">Adjust the length and press Start — or use the stopwatch to time oscillations</span>
+        </span>
+        <div class="stage-actions">
+          <button id="btnTrail" class="chip-btn active" title="Show swing path">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 20Q12 4 20 20"/></svg>
+            Trail
+          </button>
+          <button id="btnRuler" class="chip-btn active" title="Show length indicator">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v18M8 3h8M8 21h8"/></svg>
+            Ruler
+          </button>
+        </div>
+      </div>
+
+      <div class="svg-wrap">
+        <svg id="spSvg" viewBox="0 0 1200 560" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+
+      <div class="stage-bottom">
+        <!-- Stopwatch (always visible) -->
+        <div id="swBox" class="sw-box">
+          <span class="sw-label">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="13" r="9"/><path d="M12 8v5l3 3"/><path d="M10 1h4"/></svg>
+            stopwatch
+          </span>
+          <div id="swDisplay" class="sw-display">00:00.00</div>
+          <div class="sw-btns">
+            <button id="btnSW" class="btn btn-sm">Start</button>
+            <button id="btnSWReset" class="btn btn-sm">Reset</button>
+          </div>
+        </div>
+
+        <div class="stage-controls">
+          <!-- explore controls -->
+          <div class="ctrl-group only-explore">
+            <div class="ctrl-label">Length <span id="lVal" class="mono">80 cm</span></div>
+            <input id="lSlider" type="range" min="20" max="150" step="1" value="80">
+
+            <div class="ctrl-label">Amplitude <span id="aVal" class="mono">15°</span></div>
+            <input id="aSlider" type="range" min="2" max="25" step="1" value="15">
+
+            <div class="ctrl-label">Gravity</div>
+            <div class="grav-row">
+              <button class="grav-btn active" data-g="earth">Earth</button>
+              <button class="grav-btn" data-g="moon">Moon</button>
+              <button class="grav-btn" data-g="mars">Mars</button>
+              <button class="grav-btn" data-g="jupiter">Jupiter</button>
+            </div>
+
+            <div class="play-row">
+              <button id="btnPlay" class="btn btn-sm btn-primary">▶ Start</button>
+              <button id="btnReset" class="btn btn-sm">↺ Reset</button>
+            </div>
+          </div>
+
+          <!-- practice controls -->
+          <div class="ctrl-group only-practice">
+            <p class="phase-note">Use the stopwatch to time oscillations, or calculate directly with T = 2π√(L/g).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== Side panel ====== -->
+    <aside class="side">
+
+      <!-- explore: live readout + data log -->
+      <section class="card panel only-explore">
+        <h2 class="panel-title">Live reading</h2>
+        <div class="ro-row"><span>Length (L)</span><b id="roL" class="mono">80 cm</b></div>
+        <div class="ro-row"><span>Gravity (g)</span><b id="roG" class="mono">9.81 m/s²</b></div>
+        <div class="ro-row ro-total"><span>Period (T)</span><b id="roT" class="mono">— s</b></div>
+        <div class="ro-row"><span>Frequency (f)</span><b id="roF" class="mono">— Hz</b></div>
+        <div class="ro-row"><span>Current angle (θ)</span><b id="roAngle" class="mono">15.0°</b></div>
+        <div class="formula">T = 2π√(L ÷ g)</div>
+
+        <hr class="panel-sep">
+
+        <div class="data-head">
+          <h3 class="panel-subtitle">Experiment log</h3>
+          <div class="data-actions">
+            <button id="btnRecord" class="btn btn-sm">+ Record</button>
+            <button id="btnClearData" class="btn btn-sm btn-ghost">Clear</button>
+          </div>
+        </div>
+        <div class="data-scroll">
+          <table class="data-table">
+            <thead><tr><th>#</th><th>L (cm)</th><th>T (s)</th><th>T² (s²)</th></tr></thead>
+            <tbody id="dataBody"></tbody>
+          </table>
+        </div>
+        <div class="chart-wrap">
+          <svg id="chartSvg" viewBox="0 0 240 130" preserveAspectRatio="xMidYMid meet"></svg>
+          <div class="chart-label">T² vs L — slope = 4π²/g</div>
+        </div>
+      </section>
+
+      <!-- practice: problem -->
+      <section class="card panel only-practice">
+        <div class="stats-row">
+          <div class="stat"><b id="stSolved" class="mono">0</b><span>solved</span></div>
+          <div class="stat"><b id="stAcc" class="mono">—</b><span>accuracy</span></div>
+          <div class="stat"><b id="stStreak" class="mono">0</b><span>streak</span></div>
+          <div class="stat"><b id="stBest" class="mono">0</b><span>best</span></div>
+        </div>
+
+        <h2 class="panel-title">Problem <span id="qNum" class="q-num mono"></span></h2>
+        <p id="qText" class="q-text">Calculate the time period of this pendulum.</p>
+
+        <label class="ans-label" for="ansInput">Time period (T)</label>
+        <div class="ans-row">
+          <div class="ans-field">
+            <input id="ansInput" type="number" step="0.01" inputmode="decimal" placeholder="0.00" autocomplete="off">
+            <span class="ans-unit">s</span>
+          </div>
+          <button id="btnCheck" class="btn btn-primary">Check</button>
+        </div>
+        <div id="feedback" class="feedback" hidden></div>
+
+        <div class="panel-actions">
+          <button id="btnSolution" class="btn btn-sm btn-ghost">Show solution</button>
+          <button id="btnNew" class="btn btn-sm">New problem ↻</button>
+        </div>
+
+        <div id="solutionBox" class="solution" hidden></div>
+
+        <label class="ze-toggle">
+          <input id="chkBob" type="checkbox" checked>
+          <span class="switch"></span>
+          <span class="ze-toggle-txt">Include bob radius correction</span>
+        </label>
+      </section>
+
+      <!-- quick reference -->
+      <section class="card panel ref-panel">
+        <h2 class="panel-title">Quick reference</h2>
+        <ul class="ref-list">
+          <li><b>Period</b> T = 2π√(L/g) for small angles</li>
+          <li><b>L</b> — pivot to centre of mass of the bob</li>
+          <li><b>g</b> = 9.81 m/s² on Earth</li>
+          <li><b>Bob correction</b> measured to bottom? L_eff = L − r</li>
+          <li><b>T² vs L</b> is linear; slope = 4π²/g → find g</li>
+        </ul>
+      </section>
+
+    </aside>
+  </div>
+</main>
+
+<!-- ====== help dialog ====== -->
+<dialog id="helpDlg" class="help-dlg">
+  <div class="help-head">
+    <h2>About the simple pendulum</h2>
+    <button id="btnHelpClose" class="icon-btn" aria-label="Close">✕</button>
+  </div>
+  <ol class="help-steps">
+    <li><b>Setup.</b> A small, heavy bob hangs from a fixed pivot by a light, inextensible string. It is displaced to a small angle and released.</li>
+    <li><b>Time period.</b> For small angles (&lt; 15°), T = 2π√(L/g), where L is the distance from the pivot to the centre of mass of the bob.</li>
+    <li><b>Measuring L.</b> Use a metre rule from the pivot to the centre of the bob. If you measure to the bottom, subtract the bob's radius to get L.</li>
+    <li><b>Measuring T.</b> Time N complete oscillations (say 20) and divide the total by N. This averages out timing errors.</li>
+    <li><b>Finding g.</b> Record T for several lengths. Plot T² vs L — the graph is a straight line through the origin with slope 4π²/g, so g = 4π²/slope.</li>
+    <li><b>Assumptions.</b> Small angle, no air resistance, point-mass bob, rigid support, inextensible string.</li>
+  </ol>
+  <div class="help-tip">💡 In Explore mode, adjust the length and gravity, then press Start. Record data points at different lengths and watch the T² vs L graph build up!</div>
+</dialog>
+
+<script src="pendulum.js"></script>
+</body>
+</html>
