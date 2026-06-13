@@ -59,8 +59,12 @@ function snapGrid(p) {
 function autoLabel(type) {
   const pre = type === 'resistor' ? 'R' : type === 'bulb' ? 'L' : '';
   if (!pre) return '';
-  const n = state.comps.filter(c => c.type === type).length + 1;
-  return pre + (n <= 9 ? SUBS[n - 1] : String(n));
+  const used = new Set(state.comps.filter(c => c.type === type).map(c => c.label));
+  for (let n = 1; n <= 20; n++) {
+    const lbl = pre + (n <= 9 ? SUBS[n - 1] : String(n));
+    if (!used.has(lbl)) return lbl;
+  }
+  return pre + (state.comps.length + 1);
 }
 
 function findTermAt(gx, gy, comps) {
@@ -211,7 +215,7 @@ function renderComp(c) {
 
 function renderWire(w) {
   const pts = w.map(p => `${p.gx * CELL},${p.gy * CELL}`).join(' ');
-  const live = state.analysis && state.analysis.total && state.analysis.total.I > 0.0001;
+  const live = state.mode === 'practice' || (state.analysis && state.analysis.total && state.analysis.total.I > 0.0001);
   return `<polyline points="${pts}" class="wire${live ? ' wire-live' : ''}"/>`;
 }
 
@@ -549,20 +553,20 @@ function genProblem() {
 
   const comps = [], wires = [];
   if (type === 'series') {
-    comps.push({ id: 'pb', type: 'battery', x: 5, y: 7, rot: 90, value: V, label: '', state: null });
+    comps.push({ id: 'pb', type: 'battery', x: 4, y: 7, rot: 90, value: V, label: '', state: null });
     for (let i = 0; i < nR; i++)
-      comps.push({ id: 'pr' + i, type: 'resistor', x: 10 + i * 5, y: 4, rot: 0, value: Rs[i], label: 'R' + SUBS[i], state: null });
-    wires.push([{ gx: 5, gy: 6 }, { gx: 5, gy: 4 }, { gx: 9, gy: 4 }]);
-    for (let i = 0; i < nR - 1; i++) wires.push([{ gx: 11 + i * 5, gy: 4 }, { gx: 14 + i * 5, gy: 4 }]);
-    const lx = 11 + (nR - 1) * 5;
-    wires.push([{ gx: lx, gy: 4 }, { gx: lx + 3, gy: 4 }, { gx: lx + 3, gy: 8 }, { gx: 5, gy: 8 }]);
+      comps.push({ id: 'pr' + i, type: 'resistor', x: 9 + i * 5, y: 4, rot: 0, value: Rs[i], label: 'R' + SUBS[i], state: null });
+    wires.push([{ gx: 4, gy: 6 }, { gx: 4, gy: 4 }, { gx: 8, gy: 4 }]);
+    for (let i = 0; i < nR - 1; i++) wires.push([{ gx: 10 + i * 5, gy: 4 }, { gx: 13 + i * 5, gy: 4 }]);
+    const lx = 10 + (nR - 1) * 5;
+    wires.push([{ gx: lx, gy: 4 }, { gx: lx + 3, gy: 4 }, { gx: lx + 3, gy: 8 }, { gx: 4, gy: 8 }]);
   } else {
-    comps.push({ id: 'pb', type: 'battery', x: 5, y: 7, rot: 90, value: V, label: '', state: null });
-    comps.push({ id: 'pr0', type: 'resistor', x: 13, y: 4, rot: 0, value: Rs[0], label: 'R' + SUBS[0], state: null });
-    comps.push({ id: 'pr1', type: 'resistor', x: 13, y: 10, rot: 0, value: Rs[1], label: 'R' + SUBS[1], state: null });
-    wires.push([{ gx: 5, gy: 6 }, { gx: 5, gy: 4 }, { gx: 12, gy: 4 }]);
-    wires.push([{ gx: 5, gy: 8 }, { gx: 5, gy: 10 }, { gx: 12, gy: 10 }]);
-    wires.push([{ gx: 14, gy: 4 }, { gx: 19, gy: 4 }, { gx: 19, gy: 10 }, { gx: 14, gy: 10 }]);
+    comps.push({ id: 'pb', type: 'battery', x: 4, y: 7, rot: 90, value: V, label: '', state: null });
+    comps.push({ id: 'pr0', type: 'resistor', x: 12, y: 4, rot: 0, value: Rs[0], label: 'R' + SUBS[0], state: null });
+    comps.push({ id: 'pr1', type: 'resistor', x: 12, y: 10, rot: 0, value: Rs[1], label: 'R' + SUBS[1], state: null });
+    wires.push([{ gx: 4, gy: 6 }, { gx: 4, gy: 4 }, { gx: 11, gy: 4 }]);
+    wires.push([{ gx: 4, gy: 8 }, { gx: 4, gy: 10 }, { gx: 11, gy: 10 }]);
+    wires.push([{ gx: 13, gy: 4 }, { gx: 18, gy: 4 }, { gx: 18, gy: 10 }, { gx: 13, gy: 10 }]);
   }
 
   return { type, V, Rs, Req, Itot, nR, qText: pick.q, answer: pick.a, unit: pick.u, key: pick.k, comps, wires };
