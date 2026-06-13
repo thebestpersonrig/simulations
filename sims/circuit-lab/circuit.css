@@ -1,0 +1,167 @@
+/* ============ Circuit Lab — instrument-specific styles ============ */
+
+/* Tool palette */
+.palette {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 10px;
+  margin: 4px 0 2px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 11px;
+  flex-wrap: wrap;
+}
+.pal-btn {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--mut);
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  padding: 5px 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.pal-btn:hover { color: var(--txt); border-color: var(--line-strong); background: rgba(255,255,255,0.04); }
+.pal-btn.active {
+  color: var(--acc);
+  border-color: rgba(103,232,249,0.4);
+  background: rgba(103,232,249,0.1);
+}
+.pal-sep {
+  width: 1px; height: 20px;
+  background: rgba(255,255,255,0.08);
+  margin: 0 2px;
+  flex-shrink: 0;
+}
+.pal-warn { color: var(--err); }
+.pal-warn:hover { color: var(--err); background: rgba(251,113,133,0.08); border-color: rgba(251,113,133,0.3); }
+
+/* SVG canvas */
+#circSvg { cursor: crosshair; }
+
+/* Grid dots */
+.gdot { fill: rgba(255,255,255,0.07); }
+
+/* Component leads */
+.lead { stroke: rgba(180,195,220,0.55); stroke-width: 2.5; stroke-linecap: round; }
+
+/* Battery */
+.batt-body { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.08); stroke-width: 0.8; }
+.batt-p { stroke: #ef4444; stroke-width: 3.5; stroke-linecap: round; }
+.batt-n { stroke: #60a5fa; stroke-width: 2; stroke-linecap: round; }
+.pol { font-family: var(--font-mono); font-size: 11px; font-weight: 700; }
+.pp { fill: #ef4444; }
+.pn { fill: #60a5fa; }
+
+/* Resistor */
+.rtxt {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  fill: #2d1f0e;
+}
+
+/* Bulb */
+.filament { stroke: #d4a030; stroke-width: 1.8; fill: none; stroke-linecap: round; }
+
+/* Switch */
+.sw-dot { fill: #8a96aa; stroke: #5a6578; stroke-width: 1; }
+.sw-arm { stroke: #8a96aa; stroke-width: 3; stroke-linecap: round; transition: y2 0.2s; }
+
+/* Component labels */
+.clbl {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  fill: rgba(255,255,255,0.45);
+  pointer-events: none;
+}
+
+/* Terminals */
+.term {
+  fill: rgba(140,160,190,0.35);
+  stroke: none;
+  cursor: pointer;
+  transition: fill 0.15s;
+}
+.term:hover { fill: rgba(103,232,249,0.7); }
+
+/* Terminal hover glow */
+.term-glow {
+  fill: rgba(103,232,249,0.2);
+  stroke: rgba(103,232,249,0.6);
+  stroke-width: 1.5;
+  pointer-events: none;
+}
+
+/* Selection box */
+.sel-box {
+  fill: rgba(103,232,249,0.06);
+  stroke: rgba(103,232,249,0.35);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 3;
+}
+
+/* Wires */
+.wire {
+  fill: none;
+  stroke: rgba(180,200,230,0.45);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.wire-live {
+  stroke: #63b3ed;
+  stroke-dasharray: 8 6;
+  animation: flow 0.8s linear infinite;
+}
+@keyframes flow { to { stroke-dashoffset: -14; } }
+
+.wire-preview {
+  fill: none;
+  stroke: rgba(103,232,249,0.4);
+  stroke-width: 2;
+  stroke-dasharray: 6 4;
+  pointer-events: none;
+}
+
+/* Junction dots */
+.junc { fill: #63b3ed; stroke: none; }
+
+/* Ghost (placement preview) */
+.ghost { opacity: 0.35; pointer-events: none; }
+
+/* Circuit type label (practice) */
+.circ-type {
+  fill: rgba(255,255,255,0.18);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+.brand-txt {
+  fill: rgba(255,255,255,0.05);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+/* Panel separator reuse */
+.panel-sep {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin: 0.75rem 0;
+}
+
+/* Kbd hint */
+kbd {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  padding: 1px 5px;
+}

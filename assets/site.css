@@ -229,6 +229,7 @@ body {
 .art-violet { color: #a78bfa; background: radial-gradient(420px 130px at 50% 110%, rgba(167,139,250,0.16), transparent); }
 .art-amber  { color: #fcd34d; background: radial-gradient(420px 130px at 50% 110%, rgba(252,211,77,0.13), transparent); }
 .art-rose   { color: #fda4af; background: radial-gradient(420px 130px at 50% 110%, rgba(253,164,175,0.13), transparent); }
+.art-blue   { color: #60a5fa; background: radial-gradient(420px 130px at 50% 110%, rgba(96,165,250,0.16), transparent); }
 .card-body { padding: 20px 22px 14px; flex: 1; }
 .card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
 .card-top h3 { font-family: var(--font-head); font-size: 1.12rem; font-weight: 600; letter-spacing: -0.01em; }
