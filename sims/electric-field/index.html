@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electric Field — SimLab</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%90%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/sim.css">
+<link rel="stylesheet" href="field.css">
+</head>
+<body data-mode="explore">
+
+<div class="bg-orbs" aria-hidden="true">
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+</div>
+
+<nav class="nav">
+  <a class="logo" href="../../index.html">Sim<span>Lab</span></a>
+  <div class="nav-right">
+    <a class="nav-back" href="../../index.html">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      All sims
+    </a>
+  </div>
+</nav>
+
+<main class="container sim-page">
+
+  <header class="sim-head">
+    <div class="sim-title-wrap">
+      <div class="sim-kicker">// electrostatics · F = kQ₁Q₂/r²</div>
+      <h1>Electric <em>Field</em></h1>
+    </div>
+    <div class="sim-head-right">
+      <div class="mode-tabs" role="tablist">
+        <button id="tabExplore" class="mode-tab active" role="tab">Explore</button>
+        <button id="tabPractice" class="mode-tab" role="tab">Practice</button>
+      </div>
+      <button id="btnHelp" class="icon-btn" title="About Electric Field" aria-label="Help">?</button>
+    </div>
+  </header>
+
+  <div class="sim-layout">
+
+    <section class="card stage">
+      <div class="stage-top">
+        <span id="tipChip" class="tip-chip">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8"/></svg>
+          <span id="tipText">Click the canvas to place a charge — drag charges to move them</span>
+        </span>
+      </div>
+
+      <div class="palette only-explore" id="palette">
+        <button class="pal-btn active" data-tool="positive" title="Place positive charge (+)">+ Charge</button>
+        <button class="pal-btn" data-tool="negative" title="Place negative charge (−)">− Charge</button>
+        <button class="pal-btn" data-tool="move" title="Move charges (M)">Move</button>
+        <span class="pal-sep"></span>
+        <button class="pal-btn" data-tool="dipole" title="Place a dipole pair">Dipole</button>
+        <button class="pal-btn pal-warn" id="btnClear" title="Clear all">Clear</button>
+      </div>
+
+      <div class="svg-wrap">
+        <svg id="fieldSvg" viewBox="0 0 960 560" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <radialGradient id="posGlow" cx=".5" cy=".5" r=".5">
+              <stop offset="0" stop-color="#ef4444" stop-opacity="0.3"/>
+              <stop offset="1" stop-color="#ef4444" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="negGlow" cx=".5" cy=".5" r=".5">
+              <stop offset="0" stop-color="#60a5fa" stop-opacity="0.3"/>
+              <stop offset="1" stop-color="#60a5fa" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="chargeSh" x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="rgba(0,0,0,0.4)"/>
+            </filter>
+          </defs>
+          <g id="gridG"></g>
+          <g id="lineG"></g>
+          <g id="chargeG"></g>
+        </svg>
+      </div>
+
+      <div class="stage-bottom">
+        <div class="stage-controls">
+          <div class="ctrl-group only-explore" id="propBox">
+            <p class="phase-note">Click the canvas to place charges and see field lines form</p>
+          </div>
+          <div class="ctrl-group only-practice">
+            <p class="phase-note">Study the charge configuration, then calculate the answer below.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="side">
+
+      <section class="card panel only-explore">
+        <h2 class="panel-title">Field info</h2>
+        <div id="infoBox">
+          <p class="phase-note">Place at least one charge to see field information</p>
+        </div>
+      </section>
+
+      <section class="card panel only-practice">
+        <div class="stats-row">
+          <div class="stat"><b id="stSolved" class="mono">0</b><span>solved</span></div>
+          <div class="stat"><b id="stAcc" class="mono">—</b><span>accuracy</span></div>
+          <div class="stat"><b id="stStreak" class="mono">0</b><span>streak</span></div>
+          <div class="stat"><b id="stBest" class="mono">0</b><span>best</span></div>
+        </div>
+
+        <h2 class="panel-title">Problem <span id="qNum" class="q-num mono"></span></h2>
+        <p id="qText" class="q-text">Calculate the electrostatic quantity.</p>
+
+        <label class="ans-label" for="ansInput">Your answer</label>
+        <div class="ans-row">
+          <div class="ans-field">
+            <input id="ansInput" type="number" step="0.01" inputmode="decimal" placeholder="0.00" autocomplete="off">
+            <span id="ansUnit" class="ans-unit">N</span>
+          </div>
+          <button id="btnCheck" class="btn btn-primary">Check</button>
+        </div>
+        <div id="feedback" class="feedback" hidden></div>
+
+        <div class="panel-actions">
+          <button id="btnSolution" class="btn btn-sm btn-ghost">Show solution</button>
+          <button id="btnNew" class="btn btn-sm">New problem ↻</button>
+        </div>
+
+        <div id="solutionBox" class="solution" hidden></div>
+      </section>
+
+      <section class="card panel ref-panel">
+        <h2 class="panel-title">Quick reference</h2>
+        <ul class="ref-list">
+          <li><b>Coulomb's law</b> F = kQ₁Q₂ / r²</li>
+          <li><b>Electric field</b> E = kQ / r²</li>
+          <li><b>Coulomb const</b> k = 9 × 10⁹ N·m²/C²</li>
+          <li><b>Field lines</b> away from +, toward −</li>
+          <li><b>Superposition</b> fields add as vectors</li>
+          <li><b>Force</b> F = qE</li>
+        </ul>
+      </section>
+
+    </aside>
+  </div>
+</main>
+
+<dialog id="helpDlg" class="help-dlg">
+  <div class="help-head">
+    <h2>About Electric Field</h2>
+    <button id="btnHelpClose" class="icon-btn" aria-label="Close">✕</button>
+  </div>
+  <ol class="help-steps">
+    <li><b>Placing charges.</b> Select + or − from the toolbar, then click on the canvas. Each click places a charge at that position.</li>
+    <li><b>Moving charges.</b> Switch to Move mode (or just drag any charge) to reposition them. Field lines update in real time.</li>
+    <li><b>Dipole shortcut.</b> Click Dipole to place a +/− pair side by side — a quick way to see the classic dipole field pattern.</li>
+    <li><b>Field lines.</b> Lines flow from positive to negative charges. The density of lines indicates field strength.</li>
+    <li><b>Charge info.</b> The side panel shows the list of charges and the net force on the selected charge.</li>
+    <li><b>Practice mode.</b> Switch to Practice for randomly generated Coulomb's law and field strength problems.</li>
+  </ol>
+  <div class="help-tip">Tip: Place two positive charges near each other to see how like charges repel — the field lines curve away from each other!</div>
+</dialog>
+
+<script src="field.js"></script>
+</body>
+</html>

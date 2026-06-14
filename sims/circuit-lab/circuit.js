@@ -10,6 +10,8 @@ const DEFAULTS = {
   resistor: { value: 100 },
   bulb: { value: 50 },
   switch: { value: 0 },
+  led: { value: 20 },
+  motor: { value: 40 },
 };
 
 let nextId = 1;
@@ -57,7 +59,7 @@ function snapGrid(p) {
 }
 
 function autoLabel(type) {
-  const pre = type === 'resistor' ? 'R' : type === 'bulb' ? 'L' : '';
+  const pre = { resistor: 'R', bulb: 'L', led: 'D', motor: 'M' }[type] || '';
   if (!pre) return '';
   const used = new Set(state.comps.filter(c => c.type === type).map(c => c.label));
   for (let n = 1; n <= 20; n++) {
@@ -191,6 +193,31 @@ function swSvg(c) {
 <text x="0" y="32" text-anchor="middle" class="clbl">${on ? 'ON' : 'OFF'}</text>`;
 }
 
+function ledSvg(c) {
+  const col = c.color || '#ef4444';
+  const glow = glowLevel(c);
+  return `<line x1="-${CELL}" y1="0" x2="-10" y2="0" class="lead"/>
+<line x1="10" y1="0" x2="${CELL}" y2="0" class="lead"/>
+<polygon points="-8,-12 10,0 -8,12" fill="${col}" fill-opacity="0.82" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
+<line x1="10" y1="-13" x2="10" y2="13" stroke="${col}" stroke-width="2.5" stroke-linecap="round"/>
+<line x1="5" y1="-14" x2="10" y2="-21" class="led-ray" stroke="${col}" stroke-width="1.3" stroke-linecap="round"/>
+<polygon points="8,-18.5 10,-21 7.5,-19.5" fill="${col}"/>
+<line x1="10" y1="-16" x2="15" y2="-23" class="led-ray" stroke="${col}" stroke-width="1.3" stroke-linecap="round"/>
+<polygon points="13,-20.5 15,-23 12.5,-21.5" fill="${col}"/>
+${glow > 0 ? `<circle cx="0" cy="0" r="24" fill="${col}" opacity="${(glow * 0.4).toFixed(2)}"/>` : ''}
+<text x="0" y="32" text-anchor="middle" class="clbl">${c.label || ''}</text>`;
+}
+
+function motorSvg(c) {
+  const spinning = glowLevel(c) > 0;
+  return `<line x1="-${CELL}" y1="0" x2="-16" y2="0" class="lead"/>
+<line x1="16" y1="0" x2="${CELL}" y2="0" class="lead"/>
+<circle cx="0" cy="0" r="16" fill="url(#bulbG)" stroke="#8a96aa" stroke-width="1.5"/>
+<text x="0" y="5.5" text-anchor="middle" class="motor-m">M</text>
+${spinning ? `<circle cx="0" cy="0" r="10" fill="none" stroke="var(--acc)" stroke-width="1.5" stroke-dasharray="5 4" class="motor-spin"/>` : ''}
+<text x="0" y="32" text-anchor="middle" class="clbl">${c.label || ''}</text>`;
+}
+
 function glowLevel(c) {
   const a = state.analysis;
   if (!a || !a.components || !a.components[c.id]) return 0;
@@ -207,6 +234,8 @@ function renderComp(c) {
     case 'resistor': inner += resSvg(c); break;
     case 'bulb': inner += bulbSvg(c); break;
     case 'switch': inner += swSvg(c); break;
+    case 'led': inner += ledSvg(c); break;
+    case 'motor': inner += motorSvg(c); break;
   }
   inner += `<circle cx="-${CELL}" cy="0" r="5" class="term"/>`;
   inner += `<circle cx="${CELL}" cy="0" r="5" class="term"/>`;
@@ -254,7 +283,8 @@ function buildOverlay() {
     const ok = canPlace(mg.gx, mg.gy, state.rot);
     if (ok) {
       const ghost = { id: '__g__', type: tool, x: mg.gx, y: mg.gy, rot: state.rot,
-        value: DEFAULTS[tool].value, state: tool === 'switch' ? 'open' : null, label: '' };
+        value: DEFAULTS[tool].value, state: tool === 'switch' ? 'open' : null,
+        color: tool === 'led' ? '#ef4444' : undefined, label: '' };
       const raw = renderComp(ghost).replace(/filter="[^"]*"/g, '');
       s += `<g class="ghost">${raw}</g>`;
     }
@@ -330,6 +360,7 @@ function onSvgClick(e) {
       id, type: tool, x: g.gx, y: g.gy, rot: state.rot,
       value: DEFAULTS[tool].value,
       state: tool === 'switch' ? 'open' : null,
+      color: tool === 'led' ? '#ef4444' : undefined,
       label: autoLabel(tool),
     });
     state.sel = id;
@@ -374,6 +405,8 @@ function onKeyDown(e) {
     case 'e': setTool('resistor'); break;
     case 'l': setTool('bulb'); break;
     case 'k': setTool('switch'); break;
+    case 'd': setTool('led'); break;
+    case 'm': setTool('motor'); break;
   }
 }
 
@@ -387,7 +420,7 @@ function analyze() {
   if (batts.length > 1) { state.analysis = { error: 'Only one battery supported' }; updateAnalysis(); return; }
   const batt = batts[0];
 
-  const resistive = comps.filter(c => c.type === 'resistor' || c.type === 'bulb');
+  const resistive = comps.filter(c => c.type === 'resistor' || c.type === 'bulb' || c.type === 'led' || c.type === 'motor');
   if (!resistive.length) { state.analysis = null; updateAnalysis(); return; }
 
   const uf = new UF();
@@ -467,6 +500,8 @@ function setTool(t) {
     resistor: 'Click the grid to place a resistor — press R to rotate',
     bulb: 'Click the grid to place a bulb — press R to rotate',
     switch: 'Click the grid to place a switch — press R to rotate',
+    led: 'Click the grid to place an LED — press R to rotate',
+    motor: 'Click the grid to place a motor — press R to rotate',
   };
   setTip(tips[t] || '');
 }
@@ -486,9 +521,17 @@ function updateProps() {
   if (c.type === 'battery') {
     h += `<div class="ctrl-label">Voltage <span class="mono" id="valD">${c.value} V</span></div>`;
     h += `<input id="valS" type="range" min="1" max="24" step="0.5" value="${c.value}">`;
-  } else if (c.type === 'resistor' || c.type === 'bulb') {
+  } else if (c.type === 'resistor' || c.type === 'bulb' || c.type === 'led' || c.type === 'motor') {
     h += `<div class="ctrl-label">Resistance <span class="mono" id="valD">${fmtR(c.value)}</span></div>`;
     h += `<input id="valS" type="range" min="5" max="1000" step="1" value="${c.value}">`;
+    if (c.type === 'led') {
+      h += `<div class="ctrl-label" style="margin-top:8px">Color</div>`;
+      h += `<div class="led-colors">`;
+      ['#ef4444','#22c55e','#3b82f6','#eab308','#e5e7eb'].forEach(col => {
+        h += `<button class="led-col${c.color === col ? ' active' : ''}" style="background:${col}" data-col="${col}"></button>`;
+      });
+      h += `</div>`;
+    }
   }
   h += `<div class="play-row"><button class="btn btn-sm" id="btnDel">Delete component</button></div>`;
   box.innerHTML = h;
@@ -499,6 +542,13 @@ function updateProps() {
     $('valD').textContent = c.type === 'battery' ? c.value + ' V' : fmtR(c.value);
     analyze(); renderAll();
   });
+  if (c.type === 'led') {
+    box.querySelectorAll('.led-col').forEach(btn => btn.addEventListener('click', () => {
+      c.color = btn.dataset.col;
+      box.querySelectorAll('.led-col').forEach(b => b.classList.toggle('active', b === btn));
+      renderAll();
+    }));
+  }
   $('btnDel').addEventListener('click', () => {
     state.comps = state.comps.filter(x => x.id !== state.sel);
     removeWiresFor(c);
@@ -518,7 +568,7 @@ function updateAnalysis() {
   h += `<div class="ro-row"><span>Total R</span><b class="mono">${t.R === Infinity ? '∞' : fmtR(Math.round(t.R * 100) / 100)}</b></div>`;
   h += `<div class="ro-row ro-total"><span>Current</span><b class="mono">${fmtI(t.I)}</b></div>`;
   h += `<div class="ro-row"><span>Power</span><b class="mono">${fmtP(t.P)}</b></div>`;
-  const res = state.comps.filter(c => c.type === 'resistor' || c.type === 'bulb');
+  const res = state.comps.filter(c => c.type === 'resistor' || c.type === 'bulb' || c.type === 'led' || c.type === 'motor');
   if (res.length) {
     h += '<hr class="panel-sep">';
     res.forEach(c => {

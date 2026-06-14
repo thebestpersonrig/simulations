@@ -64,6 +64,8 @@
         <button class="pal-btn" data-tool="battery" title="Place battery (B)">Battery</button>
         <button class="pal-btn" data-tool="resistor" title="Place resistor (E)">Resistor</button>
         <button class="pal-btn" data-tool="bulb" title="Place bulb (L)">Bulb</button>
+        <button class="pal-btn" data-tool="led" title="Place LED (D)">LED</button>
+        <button class="pal-btn" data-tool="motor" title="Place motor (M)">Motor</button>
         <button class="pal-btn" data-tool="switch" title="Place switch (K)">Switch</button>
         <span class="pal-sep"></span>
         <button class="pal-btn" id="btnRotate" title="Rotate next component (R)">0°</button>
@@ -181,14 +183,15 @@
     <button id="btnHelpClose" class="icon-btn" aria-label="Close">✕</button>
   </div>
   <ol class="help-steps">
-    <li><b>Placing components.</b> Click a component button in the toolbar (Battery, Resistor, Bulb, Switch), then click on the grid to place it. Press <kbd>R</kbd> to rotate before placing.</li>
+    <li><b>Placing components.</b> Click a component button in the toolbar (Battery, Resistor, Bulb, LED, Motor, Switch), then click on the grid to place it. Press <kbd>R</kbd> to rotate before placing.</li>
     <li><b>Drawing wires.</b> Select the Wire tool (or press <kbd>W</kbd>), click a component terminal (the dot at each end), then click another terminal to connect them with a wire.</li>
     <li><b>Adjusting values.</b> In Select mode, click a component to select it. A slider appears below the canvas to change its resistance or voltage.</li>
     <li><b>Switches.</b> Click any switch to toggle it on/off. An open switch breaks the circuit and stops current flow.</li>
+    <li><b>LEDs &amp; Motors.</b> LEDs glow with their chosen color when current flows — select one and pick a color from the palette. Motors show a spinning indicator when powered. Both behave as resistive loads.</li>
     <li><b>Circuit analysis.</b> When you build a complete circuit (battery + components + wires forming a closed loop), the side panel shows total resistance, current, power, and per-component readings.</li>
     <li><b>Practice mode.</b> Switch to Practice to solve randomly generated series and parallel circuit problems. Calculate total resistance, current, or voltage drops.</li>
   </ol>
-  <div class="help-tip">Tip: Start simple — place a battery and a resistor, then wire their terminals in a loop. Add a bulb to see it glow when current flows!</div>
+  <div class="help-tip">Tip: Start simple — place a battery and a resistor, then wire their terminals in a loop. Add a bulb or LED to see it glow when current flows!</div>
 </dialog>
 
 <script src="circuit.js"></script>

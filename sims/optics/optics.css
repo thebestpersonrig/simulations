@@ -1,0 +1,164 @@
+/* ============ Ray Optics — instrument-specific styles ============ */
+
+/* Type palette */
+.palette {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 10px;
+  margin: 4px 0 2px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 11px;
+  flex-wrap: wrap;
+}
+.pal-btn {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--mut);
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  padding: 5px 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.pal-btn:hover { color: var(--txt); border-color: var(--line-strong); background: rgba(255,255,255,0.04); }
+.pal-btn.active {
+  color: var(--acc);
+  border-color: rgba(103,232,249,0.4);
+  background: rgba(103,232,249,0.1);
+}
+.pal-sep {
+  width: 1px; height: 20px;
+  background: rgba(255,255,255,0.08);
+  margin: 0 2px;
+  flex-shrink: 0;
+}
+
+/* SVG canvas */
+#optSvg { cursor: default; }
+#optSvg .draggable { cursor: ew-resize; }
+
+/* Principal axis */
+.axis-line {
+  stroke: rgba(255,255,255,0.12);
+  stroke-width: 1;
+  stroke-dasharray: 8 6;
+}
+
+/* Optical element */
+.lens-body {
+  stroke: rgba(130,190,240,0.7);
+  stroke-width: 1.5;
+  fill: url(#lensG);
+}
+.lens-edge {
+  stroke: rgba(130,190,240,0.5);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  fill: none;
+}
+.mirror-arc {
+  stroke: rgba(180,200,225,0.8);
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+}
+.mirror-hatch {
+  stroke: rgba(180,200,225,0.25);
+  stroke-width: 1;
+}
+
+/* Object arrow */
+.obj-arrow {
+  stroke: #fbbf24;
+  stroke-width: 3;
+  stroke-linecap: round;
+  fill: none;
+}
+.obj-head {
+  fill: #fbbf24;
+}
+.obj-base {
+  fill: #fbbf24;
+  stroke: none;
+}
+
+/* Image arrow */
+.img-arrow {
+  stroke: #a78bfa;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  fill: none;
+}
+.img-arrow-virtual {
+  stroke-dasharray: 6 4;
+}
+.img-head {
+  fill: #a78bfa;
+}
+
+/* Rays */
+.ray {
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+.ray-solid { stroke-dasharray: none; }
+.ray-dashed {
+  stroke-dasharray: 6 5;
+  opacity: 0.45;
+}
+.ray-1 { stroke: #ef4444; }
+.ray-2 { stroke: #22c55e; }
+.ray-3 { stroke: #3b82f6; }
+
+/* Markers */
+.mark-dot {
+  fill: rgba(255,255,255,0.35);
+  stroke: none;
+}
+.mark-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: rgba(255,255,255,0.35);
+  text-anchor: middle;
+}
+.dist-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  fill: rgba(255,255,255,0.3);
+  text-anchor: middle;
+}
+
+/* Nature badge in readings */
+.nature-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 6px;
+  margin-top: 6px;
+}
+.nature-real { color: #34d399; background: rgba(52,211,153,0.12); border: 1px solid rgba(52,211,153,0.25); }
+.nature-virtual { color: #a78bfa; background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.25); }
+
+/* Panel separator */
+.panel-sep {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin: 0.75rem 0;
+}
+
+kbd {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  padding: 1px 5px;
+}

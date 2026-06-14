@@ -1,0 +1,116 @@
+/* ============ Electric Field — instrument-specific styles ============ */
+
+.palette {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 10px;
+  margin: 4px 0 2px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 11px;
+  flex-wrap: wrap;
+}
+.pal-btn {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--mut);
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  padding: 5px 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.pal-btn:hover { color: var(--txt); border-color: var(--line-strong); background: rgba(255,255,255,0.04); }
+.pal-btn.active {
+  color: var(--acc);
+  border-color: rgba(103,232,249,0.4);
+  background: rgba(103,232,249,0.1);
+}
+.pal-sep {
+  width: 1px; height: 20px;
+  background: rgba(255,255,255,0.08);
+  margin: 0 2px;
+  flex-shrink: 0;
+}
+.pal-warn { color: var(--err); }
+.pal-warn:hover { color: var(--err); background: rgba(251,113,133,0.08); border-color: rgba(251,113,133,0.3); }
+
+#fieldSvg { cursor: crosshair; }
+
+.gdot { fill: rgba(255,255,255,0.05); }
+
+/* Field lines */
+.field-line {
+  fill: none;
+  stroke: rgba(103,232,249,0.35);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Charges */
+.charge-body {
+  stroke-width: 1.5;
+}
+.charge-pos .charge-body { fill: rgba(239,68,68,0.15); stroke: #ef4444; }
+.charge-neg .charge-body { fill: rgba(96,165,250,0.15); stroke: #60a5fa; }
+.charge-sign {
+  font-family: var(--font-head);
+  font-size: 18px;
+  font-weight: 700;
+  text-anchor: middle;
+  pointer-events: none;
+}
+.charge-pos .charge-sign { fill: #ef4444; }
+.charge-neg .charge-sign { fill: #60a5fa; }
+.charge-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  fill: rgba(255,255,255,0.45);
+  text-anchor: middle;
+  pointer-events: none;
+}
+.charge-sel .charge-body {
+  stroke-dasharray: 4 3;
+  stroke-width: 2;
+}
+
+/* Info panel */
+.charge-list {
+  list-style: none;
+  padding: 0;
+}
+.charge-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 0.82rem;
+}
+.charge-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.charge-dot-pos { background: #ef4444; }
+.charge-dot-neg { background: #60a5fa; }
+
+.panel-sep {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin: 0.75rem 0;
+}
+
+kbd {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  padding: 1px 5px;
+}

@@ -72,6 +72,31 @@
 .sw-dot { fill: #8a96aa; stroke: #5a6578; stroke-width: 1; }
 .sw-arm { stroke: #8a96aa; stroke-width: 3; stroke-linecap: round; transition: y2 0.2s; }
 
+/* LED */
+.led-ray { pointer-events: none; }
+.led-colors { display: flex; gap: 6px; margin-top: 4px; }
+.led-col {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.15s;
+  padding: 0;
+}
+.led-col:hover { transform: scale(1.15); }
+.led-col.active { border-color: rgba(255,255,255,0.6); box-shadow: 0 0 10px currentColor; }
+
+/* Motor */
+.motor-m {
+  font-family: var(--font-head);
+  font-size: 16px;
+  font-weight: 700;
+  fill: #8a96aa;
+  pointer-events: none;
+}
+.motor-spin { animation: motorspin 1s linear infinite; }
+@keyframes motorspin { to { stroke-dashoffset: -28; } }
+
 /* Component labels */
 .clbl {
   font-family: var(--font-mono);
