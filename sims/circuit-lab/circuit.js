@@ -155,32 +155,34 @@ function buildGrid() {
 function battSvg(c) {
   return `<line x1="-${CELL}" y1="0" x2="-12" y2="0" class="lead"/>
 <line x1="12" y1="0" x2="${CELL}" y2="0" class="lead"/>
-<rect x="-14" y="-18" width="28" height="36" rx="4" class="batt-body"/>
-<line x1="-8" y1="-13" x2="-8" y2="13" class="batt-p"/>
-<line x1="-2" y1="-7" x2="-2" y2="7" class="batt-n"/>
-<line x1="4" y1="-13" x2="4" y2="13" class="batt-p"/>
-<line x1="10" y1="-7" x2="10" y2="7" class="batt-n"/>
-<text x="-20" y="-12" class="pol pn">−</text>
-<text x="16" y="-12" class="pol pp">+</text>
-<text x="0" y="32" text-anchor="middle" class="clbl">${c.value}V</text>`;
+<rect x="-15" y="-19" width="30" height="38" rx="5" fill="url(#battG)" stroke="rgba(255,255,255,0.1)" stroke-width="0.8"/>
+<line x1="-8" y1="-14" x2="-8" y2="14" class="batt-p"/>
+<line x1="-2" y1="-8" x2="-2" y2="8" class="batt-n"/>
+<line x1="4" y1="-14" x2="4" y2="14" class="batt-p"/>
+<line x1="10" y1="-8" x2="10" y2="8" class="batt-n"/>
+<text x="-21" y="-12" class="pol pn">−</text>
+<text x="17" y="-12" class="pol pp">+</text>
+<text x="0" y="33" text-anchor="middle" class="clbl">${c.value}V</text>`;
 }
 
 function resSvg(c) {
   return `<line x1="-${CELL}" y1="0" x2="-20" y2="0" class="lead"/>
 <line x1="20" y1="0" x2="${CELL}" y2="0" class="lead"/>
-<rect x="-20" y="-10" width="40" height="20" rx="3.5" fill="url(#resG)" stroke="#8a7a66" stroke-width="1"/>
+<rect x="-21" y="-11" width="42" height="22" rx="4" fill="url(#resG)" stroke="#9a8a6e" stroke-width="1.2"/>
+<rect x="-21" y="-11" width="42" height="11" rx="4" fill="rgba(255,255,255,0.08)"/>
 <text x="0" y="4" text-anchor="middle" class="rtxt">${fmtR(c.value)}</text>
-<text x="0" y="32" text-anchor="middle" class="clbl">${c.label}</text>`;
+<text x="0" y="33" text-anchor="middle" class="clbl">${c.label}</text>`;
 }
 
 function bulbSvg(c) {
   const glow = glowLevel(c);
   return `<line x1="-${CELL}" y1="0" x2="-15" y2="0" class="lead"/>
 <line x1="15" y1="0" x2="${CELL}" y2="0" class="lead"/>
-<circle cx="0" cy="0" r="15" fill="url(#bulbG)" stroke="#8a96aa" stroke-width="1.2"/>
-<path d="M-7-7 7 7M-7 7 7-7" class="filament"/>
-${glow > 0 ? `<circle cx="0" cy="0" r="24" fill="url(#glowG)" opacity="${glow.toFixed(2)}"/>` : ''}
-<text x="0" y="32" text-anchor="middle" class="clbl">${c.label || ''}</text>`;
+${glow > 0 ? `<circle cx="0" cy="0" r="30" fill="url(#glowG)" opacity="${(glow * 0.7).toFixed(2)}"/>` : ''}
+<circle cx="0" cy="0" r="15" fill="url(#bulbG)" stroke="${glow > 0 ? 'rgba(255,240,180,0.6)' : '#8a96aa'}" stroke-width="${glow > 0 ? 1.5 : 1.2}"/>
+<path d="M-7-7 7 7M-7 7 7-7" class="filament" ${glow > 0 ? `style="stroke:#f5d060;filter:drop-shadow(0 0 3px rgba(255,220,80,0.6))"` : ''}/>
+${glow > 0 ? `<circle cx="0" cy="0" r="18" fill="url(#glowG)" opacity="${(glow * 0.5).toFixed(2)}"/>` : ''}
+<text x="0" y="33" text-anchor="middle" class="clbl">${c.label || ''}</text>`;
 }
 
 function swSvg(c) {
@@ -198,24 +200,26 @@ function ledSvg(c) {
   const glow = glowLevel(c);
   return `<line x1="-${CELL}" y1="0" x2="-10" y2="0" class="lead"/>
 <line x1="10" y1="0" x2="${CELL}" y2="0" class="lead"/>
-<polygon points="-8,-12 10,0 -8,12" fill="${col}" fill-opacity="0.82" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
-<line x1="10" y1="-13" x2="10" y2="13" stroke="${col}" stroke-width="2.5" stroke-linecap="round"/>
-<line x1="5" y1="-14" x2="10" y2="-21" class="led-ray" stroke="${col}" stroke-width="1.3" stroke-linecap="round"/>
-<polygon points="8,-18.5 10,-21 7.5,-19.5" fill="${col}"/>
-<line x1="10" y1="-16" x2="15" y2="-23" class="led-ray" stroke="${col}" stroke-width="1.3" stroke-linecap="round"/>
-<polygon points="13,-20.5 15,-23 12.5,-21.5" fill="${col}"/>
-${glow > 0 ? `<circle cx="0" cy="0" r="24" fill="${col}" opacity="${(glow * 0.4).toFixed(2)}"/>` : ''}
-<text x="0" y="32" text-anchor="middle" class="clbl">${c.label || ''}</text>`;
+${glow > 0 ? `<circle cx="0" cy="0" r="32" fill="${col}" opacity="${(glow * 0.2).toFixed(2)}"/>` : ''}
+${glow > 0 ? `<circle cx="0" cy="0" r="22" fill="${col}" opacity="${(glow * 0.35).toFixed(2)}"/>` : ''}
+<polygon points="-9,-13 11,0 -9,13" fill="${col}" fill-opacity="${glow > 0 ? 0.95 : 0.8}" stroke="rgba(255,255,255,0.25)" stroke-width="0.8"/>
+<line x1="11" y1="-14" x2="11" y2="14" stroke="${col}" stroke-width="2.5" stroke-linecap="round"/>
+<line x1="5" y1="-15" x2="10" y2="-22" class="led-ray" stroke="${col}" stroke-width="1.3" stroke-linecap="round" ${glow > 0 ? `opacity="1"` : `opacity="0.5"`}/>
+<polygon points="8,-19.5 10,-22 7.5,-20.5" fill="${col}" ${glow > 0 ? '' : 'opacity="0.5"'}/>
+<line x1="11" y1="-17" x2="16" y2="-24" class="led-ray" stroke="${col}" stroke-width="1.3" stroke-linecap="round" ${glow > 0 ? `opacity="1"` : `opacity="0.5"`}/>
+<polygon points="14,-21.5 16,-24 13.5,-22.5" fill="${col}" ${glow > 0 ? '' : 'opacity="0.5"'}/>
+<text x="0" y="33" text-anchor="middle" class="clbl">${c.label || ''}</text>`;
 }
 
 function motorSvg(c) {
   const spinning = glowLevel(c) > 0;
   return `<line x1="-${CELL}" y1="0" x2="-16" y2="0" class="lead"/>
 <line x1="16" y1="0" x2="${CELL}" y2="0" class="lead"/>
-<circle cx="0" cy="0" r="16" fill="url(#bulbG)" stroke="#8a96aa" stroke-width="1.5"/>
-<text x="0" y="5.5" text-anchor="middle" class="motor-m">M</text>
-${spinning ? `<circle cx="0" cy="0" r="10" fill="none" stroke="var(--acc)" stroke-width="1.5" stroke-dasharray="5 4" class="motor-spin"/>` : ''}
-<text x="0" y="32" text-anchor="middle" class="clbl">${c.label || ''}</text>`;
+${spinning ? `<circle cx="0" cy="0" r="24" fill="rgba(103,232,249,0.08)"/>` : ''}
+<circle cx="0" cy="0" r="16" fill="url(#bulbG)" stroke="${spinning ? 'rgba(103,232,249,0.5)' : '#8a96aa'}" stroke-width="${spinning ? 1.8 : 1.5}"/>
+<text x="0" y="5.5" text-anchor="middle" class="motor-m" ${spinning ? 'style="fill:var(--acc)"' : ''}>M</text>
+${spinning ? `<circle cx="0" cy="0" r="11" fill="none" stroke="var(--acc)" stroke-width="1.5" stroke-dasharray="5 4" class="motor-spin" opacity="0.8"/>` : ''}
+<text x="0" y="33" text-anchor="middle" class="clbl">${c.label || ''}</text>`;
 }
 
 function glowLevel(c) {

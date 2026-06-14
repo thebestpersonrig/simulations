@@ -68,16 +68,21 @@
         <svg id="fieldSvg" viewBox="0 0 960 560" preserveAspectRatio="xMidYMid meet">
           <defs>
             <radialGradient id="posGlow" cx=".5" cy=".5" r=".5">
-              <stop offset="0" stop-color="#ef4444" stop-opacity="0.3"/>
+              <stop offset="0" stop-color="#ef4444" stop-opacity="0.4"/>
+              <stop offset=".5" stop-color="#ef4444" stop-opacity="0.12"/>
               <stop offset="1" stop-color="#ef4444" stop-opacity="0"/>
             </radialGradient>
             <radialGradient id="negGlow" cx=".5" cy=".5" r=".5">
-              <stop offset="0" stop-color="#60a5fa" stop-opacity="0.3"/>
+              <stop offset="0" stop-color="#60a5fa" stop-opacity="0.4"/>
+              <stop offset=".5" stop-color="#60a5fa" stop-opacity="0.12"/>
               <stop offset="1" stop-color="#60a5fa" stop-opacity="0"/>
             </radialGradient>
             <filter id="chargeSh" x="-30%" y="-30%" width="160%" height="160%">
-              <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="rgba(0,0,0,0.4)"/>
+              <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.45)"/>
             </filter>
+            <marker id="fieldArr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <polygon points="0 0, 6 3, 0 6" fill="rgba(103,232,249,0.35)"/>
+            </marker>
           </defs>
           <g id="gridG"></g>
           <g id="lineG"></g>

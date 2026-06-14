@@ -1,11 +1,11 @@
 /* ============ SimLab — shared base ============ */
 :root {
-  --bg: #070b14;
-  --bg-2: #0b1120;
+  --bg: #060a12;
+  --bg-2: #0a0f1c;
   --card: rgba(255, 255, 255, 0.035);
   --card-hover: rgba(255, 255, 255, 0.06);
-  --line: rgba(255, 255, 255, 0.09);
-  --line-strong: rgba(255, 255, 255, 0.16);
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.15);
   --txt: #e9edf6;
   --mut: #8b95ab;
   --acc: #67e8f9;
@@ -13,12 +13,14 @@
   --ok: #34d399;
   --err: #fb7185;
   --warn: #fbbf24;
-  --grad: linear-gradient(100deg, #67e8f9, #818cf8 55%, #c084fc);
+  --grad: linear-gradient(135deg, #67e8f9, #818cf8 50%, #c084fc);
+  --grad-glow: linear-gradient(135deg, rgba(103,232,249,0.25), rgba(129,140,248,0.25) 50%, rgba(192,132,252,0.25));
   --font-head: "Space Grotesk", "Inter", sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   --radius: 18px;
   --shadow: 0 18px 50px -12px rgba(0, 0, 0, 0.55);
+  --shadow-glow: 0 8px 40px -8px rgba(103, 232, 249, 0.15);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -50,23 +52,24 @@ body {
   z-index: -1;
   overflow: hidden;
   background:
-    radial-gradient(1100px 500px at 80% -10%, rgba(129, 140, 248, 0.10), transparent 60%),
-    radial-gradient(900px 480px at 8% 10%, rgba(103, 232, 249, 0.08), transparent 60%),
+    radial-gradient(1200px 550px at 75% -15%, rgba(129, 140, 248, 0.12), transparent 55%),
+    radial-gradient(1000px 500px at 5% 5%, rgba(103, 232, 249, 0.09), transparent 55%),
+    radial-gradient(800px 400px at 50% 100%, rgba(192, 132, 252, 0.06), transparent 55%),
     linear-gradient(180deg, var(--bg-2), var(--bg) 40%);
 }
 .bg-orbs::after {
   content: "";
   position: absolute; inset: 0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
   background-size: 56px 56px;
   mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, black 10%, transparent 75%);
 }
-.orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.5; }
-.orb-a { width: 480px; height: 480px; background: rgba(103, 232, 249, 0.10); top: -160px; left: -120px; animation: drift 26s ease-in-out infinite alternate; }
-.orb-b { width: 560px; height: 560px; background: rgba(167, 139, 250, 0.10); top: -120px; right: -180px; animation: drift 32s ease-in-out infinite alternate-reverse; }
-.orb-c { width: 420px; height: 420px; background: rgba(56, 189, 248, 0.07); bottom: -220px; left: 35%; animation: drift 38s ease-in-out infinite alternate; }
+.orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.5; }
+.orb-a { width: 520px; height: 520px; background: rgba(103, 232, 249, 0.12); top: -180px; left: -140px; animation: drift 26s ease-in-out infinite alternate; }
+.orb-b { width: 600px; height: 600px; background: rgba(167, 139, 250, 0.11); top: -140px; right: -200px; animation: drift 32s ease-in-out infinite alternate-reverse; }
+.orb-c { width: 460px; height: 460px; background: rgba(56, 189, 248, 0.08); bottom: -240px; left: 35%; animation: drift 38s ease-in-out infinite alternate; }
 @keyframes drift {
   from { transform: translate(0, 0) scale(1); }
   to   { transform: translate(60px, 40px) scale(1.12); }
@@ -210,28 +213,49 @@ body {
   overflow: hidden;
   text-decoration: none;
   color: var(--txt);
-  transition: transform 0.25s ease, border-color 0.25s, box-shadow 0.25s, background 0.25s;
+  transition: transform 0.35s cubic-bezier(.22,.68,0,1.2), border-color 0.3s, box-shadow 0.3s, background 0.3s;
+}
+.sim-card.live::before {
+  content: "";
+  position: absolute; inset: -1px;
+  border-radius: var(--radius);
+  background: var(--grad);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.35s;
 }
 .sim-card.live:hover {
-  transform: translateY(-5px);
-  border-color: rgba(103, 232, 249, 0.4);
-  background: var(--card-hover);
-  box-shadow: var(--shadow), 0 0 0 1px rgba(103, 232, 249, 0.15);
+  transform: translateY(-6px);
+  border-color: transparent;
+  background: rgba(12, 18, 32, 0.85);
+  box-shadow: var(--shadow), 0 0 40px -8px rgba(103, 232, 249, 0.18);
 }
-.sim-card.soon { opacity: 0.62; }
+.sim-card.live:hover::before { opacity: 1; }
+.sim-card.soon { opacity: 0.55; }
 .card-art {
-  height: 130px;
+  height: 140px;
   display: grid; place-items: center;
   border-bottom: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
 }
-.card-art svg { width: 150px; height: 80px; opacity: 0.9; }
-.art-teal   { color: #67e8f9; background: radial-gradient(420px 130px at 50% 110%, rgba(103,232,249,0.16), transparent); }
-.art-violet { color: #a78bfa; background: radial-gradient(420px 130px at 50% 110%, rgba(167,139,250,0.16), transparent); }
-.art-amber  { color: #fcd34d; background: radial-gradient(420px 130px at 50% 110%, rgba(252,211,77,0.13), transparent); }
-.art-rose   { color: #fda4af; background: radial-gradient(420px 130px at 50% 110%, rgba(253,164,175,0.13), transparent); }
-.art-blue   { color: #60a5fa; background: radial-gradient(420px 130px at 50% 110%, rgba(96,165,250,0.16), transparent); }
-.art-sky    { color: #38bdf8; background: radial-gradient(420px 130px at 50% 110%, rgba(56,189,248,0.16), transparent); }
-.art-emerald{ color: #34d399; background: radial-gradient(420px 130px at 50% 110%, rgba(52,211,153,0.14), transparent); }
+.card-art::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 120%, currentColor, transparent 70%);
+  opacity: 0.06;
+  transition: opacity 0.3s;
+}
+.sim-card.live:hover .card-art::after { opacity: 0.12; }
+.card-art svg { width: 150px; height: 80px; opacity: 0.85; transition: transform 0.35s cubic-bezier(.22,.68,0,1.2), opacity 0.3s; }
+.sim-card.live:hover .card-art svg { transform: scale(1.08); opacity: 1; }
+.art-teal   { color: #67e8f9; background: radial-gradient(450px 140px at 50% 110%, rgba(103,232,249,0.14), transparent); }
+.art-violet { color: #a78bfa; background: radial-gradient(450px 140px at 50% 110%, rgba(167,139,250,0.14), transparent); }
+.art-amber  { color: #fcd34d; background: radial-gradient(450px 140px at 50% 110%, rgba(252,211,77,0.11), transparent); }
+.art-rose   { color: #fda4af; background: radial-gradient(450px 140px at 50% 110%, rgba(253,164,175,0.11), transparent); }
+.art-blue   { color: #60a5fa; background: radial-gradient(450px 140px at 50% 110%, rgba(96,165,250,0.14), transparent); }
+.art-sky    { color: #38bdf8; background: radial-gradient(450px 140px at 50% 110%, rgba(56,189,248,0.14), transparent); }
+.art-emerald{ color: #34d399; background: radial-gradient(450px 140px at 50% 110%, rgba(52,211,153,0.12), transparent); }
 .card-body { padding: 20px 22px 14px; flex: 1; }
 .card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
 .card-top h3 { font-family: var(--font-head); font-size: 1.12rem; font-weight: 600; letter-spacing: -0.01em; }
@@ -243,9 +267,10 @@ body {
   padding: 4px 9px;
   border-radius: 999px;
 }
-.badge-live { color: #052e22; background: var(--ok); box-shadow: 0 0 16px rgba(52, 211, 153, 0.45); }
+.badge-live { color: #052e22; background: var(--ok); box-shadow: 0 0 18px rgba(52, 211, 153, 0.5); animation: badge-pulse 2.5s ease-in-out infinite; }
+@keyframes badge-pulse { 0%, 100% { box-shadow: 0 0 18px rgba(52, 211, 153, 0.5); } 50% { box-shadow: 0 0 24px rgba(52, 211, 153, 0.7); } }
 .badge-soon { color: var(--mut); border: 1px solid var(--line-strong); }
-.card-body p { font-size: 0.88rem; color: var(--mut); }
+.card-body p { font-size: 0.88rem; color: var(--mut); line-height: 1.55; }
 .card-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
 .card-tags span {
   font-family: var(--font-mono);
@@ -254,17 +279,19 @@ body {
   border: 1px solid var(--line);
   padding: 3px 9px;
   border-radius: 7px;
+  transition: border-color 0.2s, color 0.2s;
 }
+.sim-card.live:hover .card-tags span { border-color: var(--line-strong); color: var(--txt); }
 .card-go {
   padding: 13px 22px;
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--acc);
   border-top: 1px solid var(--line);
-  transition: padding-left 0.2s ease;
+  transition: padding-left 0.3s cubic-bezier(.22,.68,0,1.2), color 0.2s;
 }
 .sim-card.soon .card-go { color: var(--mut); font-weight: 500; }
-.sim-card.live:hover .card-go { padding-left: 28px; }
+.sim-card.live:hover .card-go { padding-left: 30px; }
 
 /* ============ footer ============ */
 .footer {

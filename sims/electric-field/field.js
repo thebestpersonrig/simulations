@@ -84,7 +84,7 @@ function renderFieldLines() {
       if (pts.length < 3) continue;
       let d = `M${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)}`;
       for (let j = 1; j < pts.length; j++) d += ` L${pts[j].x.toFixed(1)},${pts[j].y.toFixed(1)}`;
-      s += `<path d="${d}" class="field-line"/>`;
+      s += `<path d="${d}" class="field-line" marker-mid="url(#fieldArr)"/>`;
     }
   }
   return s;
@@ -97,10 +97,11 @@ function renderCharges() {
     const sel = c.id === state.sel ? ' charge-sel' : '';
     const glow = c.q > 0 ? 'url(#posGlow)' : 'url(#negGlow)';
     s += `<g class="charge ${cls}${sel}" data-id="${c.id}" transform="translate(${c.x},${c.y})" filter="url(#chargeSh)" style="cursor:grab">`;
-    s += `<circle r="28" fill="${glow}"/>`;
+    s += `<circle r="36" fill="${glow}"/>`;
+    s += `<circle r="24" fill="${glow}" opacity="0.5"/>`;
     s += `<circle r="16" class="charge-body"/>`;
     s += `<text y="6" class="charge-sign">${c.q > 0 ? '+' : '−'}</text>`;
-    s += `<text y="32" class="charge-label">${c.label}</text>`;
+    s += `<text y="34" class="charge-label">${c.label}</text>`;
     s += `</g>`;
   }
   return s;

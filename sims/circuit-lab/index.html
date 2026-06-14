@@ -76,21 +76,33 @@
         <svg id="circSvg" viewBox="0 0 960 560" preserveAspectRatio="xMidYMid meet">
           <defs>
             <linearGradient id="resG" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#e8d5b7"/>
-              <stop offset=".5" stop-color="#c4a882"/>
-              <stop offset="1" stop-color="#9c7c54"/>
+              <stop offset="0" stop-color="#ecd8b8"/>
+              <stop offset=".3" stop-color="#d4b88a"/>
+              <stop offset=".5" stop-color="#c4a872"/>
+              <stop offset=".7" stop-color="#d4b88a"/>
+              <stop offset="1" stop-color="#a08050"/>
             </linearGradient>
-            <radialGradient id="bulbG" cx=".4" cy=".35" r=".6">
-              <stop offset="0" stop-color="rgba(255,255,255,0.12)"/>
-              <stop offset="1" stop-color="rgba(255,255,255,0.03)"/>
+            <radialGradient id="bulbG" cx=".38" cy=".32" r=".65">
+              <stop offset="0" stop-color="rgba(255,255,255,0.15)"/>
+              <stop offset=".5" stop-color="rgba(255,255,255,0.06)"/>
+              <stop offset="1" stop-color="rgba(255,255,255,0.02)"/>
             </radialGradient>
             <radialGradient id="glowG" cx=".5" cy=".5" r=".5">
-              <stop offset="0" stop-color="#ffeaa7"/>
-              <stop offset=".6" stop-color="rgba(255,234,167,0.3)"/>
+              <stop offset="0" stop-color="#fff4c2"/>
+              <stop offset=".3" stop-color="rgba(255,240,180,0.5)"/>
+              <stop offset=".6" stop-color="rgba(255,234,167,0.2)"/>
               <stop offset="1" stop-color="rgba(255,234,167,0)"/>
             </radialGradient>
+            <linearGradient id="battG" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="rgba(255,255,255,0.08)"/>
+              <stop offset="1" stop-color="rgba(255,255,255,0.02)"/>
+            </linearGradient>
             <filter id="compSh" x="-30%" y="-30%" width="160%" height="160%">
-              <feDropShadow dx="0" dy="1.5" stdDeviation="2.5" flood-color="rgba(0,0,0,0.35)"/>
+              <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.4)"/>
+            </filter>
+            <filter id="glowF" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="4" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
           </defs>
           <g id="gridG"></g>

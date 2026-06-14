@@ -7,10 +7,11 @@
   gap: 5px;
   padding: 7px 10px;
   margin: 4px 0 2px;
-  background: rgba(255,255,255,0.02);
+  background: linear-gradient(160deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
   border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 11px;
+  border-radius: 12px;
   flex-wrap: wrap;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
 }
 .pal-btn {
   font-family: var(--font-body);
@@ -22,29 +23,31 @@
   border-radius: 8px;
   padding: 5px 11px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
   white-space: nowrap;
 }
-.pal-btn:hover { color: var(--txt); border-color: var(--line-strong); background: rgba(255,255,255,0.04); }
+.pal-btn:hover { color: var(--txt); border-color: var(--line-strong); background: rgba(255,255,255,0.05); transform: translateY(-1px); }
+.pal-btn:active { transform: translateY(0) scale(0.97); }
 .pal-btn.active {
   color: var(--acc);
   border-color: rgba(103,232,249,0.4);
   background: rgba(103,232,249,0.1);
+  box-shadow: 0 0 12px -2px rgba(103,232,249,0.15);
 }
 .pal-sep {
   width: 1px; height: 20px;
   background: rgba(255,255,255,0.08);
-  margin: 0 2px;
+  margin: 0 3px;
   flex-shrink: 0;
 }
 .pal-warn { color: var(--err); }
-.pal-warn:hover { color: var(--err); background: rgba(251,113,133,0.08); border-color: rgba(251,113,133,0.3); }
+.pal-warn:hover { color: var(--err); background: rgba(251,113,133,0.1); border-color: rgba(251,113,133,0.35); }
 
 /* SVG canvas */
 #circSvg { cursor: crosshair; }
 
 /* Grid dots */
-.gdot { fill: rgba(255,255,255,0.07); }
+.gdot { fill: rgba(255,255,255,0.06); transition: fill 0.2s; }
 
 /* Component leads */
 .lead { stroke: rgba(180,195,220,0.55); stroke-width: 2.5; stroke-linecap: round; }
@@ -116,10 +119,11 @@
 
 /* Terminal hover glow */
 .term-glow {
-  fill: rgba(103,232,249,0.2);
+  fill: rgba(103,232,249,0.15);
   stroke: rgba(103,232,249,0.6);
   stroke-width: 1.5;
   pointer-events: none;
+  filter: drop-shadow(0 0 6px rgba(103,232,249,0.4));
 }
 
 /* Selection box */
@@ -133,15 +137,17 @@
 /* Wires */
 .wire {
   fill: none;
-  stroke: rgba(180,200,230,0.45);
+  stroke: rgba(180,200,230,0.4);
   stroke-width: 2.5;
   stroke-linecap: round;
   stroke-linejoin: round;
+  filter: drop-shadow(0 0 1px rgba(180,200,230,0.1));
 }
 .wire-live {
   stroke: #63b3ed;
   stroke-dasharray: 8 6;
-  animation: flow 0.8s linear infinite;
+  animation: flow 0.7s linear infinite;
+  filter: drop-shadow(0 0 4px rgba(99,179,237,0.25));
 }
 @keyframes flow { to { stroke-dashoffset: -14; } }
 
@@ -154,7 +160,7 @@
 }
 
 /* Junction dots */
-.junc { fill: #63b3ed; stroke: none; }
+.junc { fill: #63b3ed; stroke: none; filter: drop-shadow(0 0 4px rgba(99,179,237,0.4)); }
 
 /* Ghost (placement preview) */
 .ghost { opacity: 0.35; pointer-events: none; }
